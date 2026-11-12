@@ -37,8 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "rest_framework",
+    "rest_framework_simplejwt.token_blacklist",
     "accounts",
-    
+    "academics",
+    "news",
 ]
 
 MIDDLEWARE = [
@@ -59,10 +62,25 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    # Every endpoint needs a logged in user unless the view says otherwise
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated'  # Makes all endpoints or URLs protected
+        'rest_framework.permissions.IsAuthenticated',
     ),
+    # Used by the throttles in accounts/throttles.py
+    'DEFAULT_THROTTLE_RATES': {
+        'signin': '10/minute',
+        'password_reset': '5/hour',
+    },
 }
+
+SIMPLE_JWT = {
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+}
+
+# Emails are printed in the terminal while we are developing
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'no-reply@school.local'
 
 TEMPLATES = [
     {
