@@ -59,3 +59,14 @@ class NewsTests(APITestCase):
         self.client.force_authenticate(self.admin)
         response = self.client.patch('/news/' + str(post.id) + '/edit/', {'title': 'Cultural Day 2026'})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_admin_sees_drafts_in_all_posts(self):
+        self.client.force_authenticate(self.admin)
+        response = self.client.get('/news/all/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 2)
+
+    def test_non_admin_cannot_see_all_posts(self):
+        self.client.force_authenticate(self.teacher)
+        response = self.client.get('/news/all/')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)

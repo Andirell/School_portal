@@ -37,6 +37,14 @@ def posts(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAdminRole])
+def all_posts(request):
+    # Admins need to see drafts too so they can publish them
+    serializer = PostSerializer(Post.objects.all(), many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
 @permission_classes([AllowAny])
 def post_detail(request, post_id):
     post = get_object_or_404(Post, id=post_id, is_published=True)

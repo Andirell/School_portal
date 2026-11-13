@@ -26,11 +26,37 @@ def is_class_teacher_of(teacher, student):
     return student.school_class.class_teacher_id == teacher.id
 
 
+def can_view_class(user, school_class):
+    if user.role == 'admin':
+        return True
+    return school_class.class_teacher_id == user.id
+
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def list_classes(request):
     classes = SchoolClass.objects.select_related('class_teacher')
     serializer = SchoolClassSerializer(classes, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([IsTeacher])
+def my_classes(request):
+    classes = SchoolClass.objects.filter(class_teacher=request.user)
+    serializer = SchoolClassSerializer(classes, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def class_students(request, class_id):
+    school_class = get_object_or_404(SchoolClass, id=class_id)
+    if not can_view_class(request.user, school_class):
+        return Response({"error": "You can't view students in this class"}, status=status.HTTP_403_FORBIDDEN)
+
+    students = school_class.students.select_related('user', 'school_class').order_by('user__last_name')
+    serializer = StudentSerializer(students, many=True)
     return Response(serializer.data)
 
 
@@ -108,10 +134,7 @@ def child_results(request, student_id):
 @permission_classes([IsAuthenticated])
 def class_results(request, class_id):
     school_class = get_object_or_404(SchoolClass, id=class_id)
-
-    is_admin = request.user.role == 'admin'
-    is_this_class_teacher = school_class.class_teacher_id == request.user.id
-    if not is_admin and not is_this_class_teacher:
+    if not can_view_class(request.user, school_class):
         return Response({"error": "You can't view results for this class"}, status=status.HTTP_403_FORBIDDEN)
 
     results = filter_results(Result.objects.filter(student__school_class=school_class), request)

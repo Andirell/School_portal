@@ -123,6 +123,29 @@ class ResultTests(APITestCase):
         response = self.client.get('/academics/classes/' + str(self.jss1.id) + '/results/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+    def test_teacher_sees_own_classes(self):
+        self.client.force_authenticate(self.teacher)
+        response = self.client.get('/academics/my-classes/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]['id'], self.jss1.id)
+
+    def test_class_students_only_for_class_teacher(self):
+        self.client.force_authenticate(self.teacher)
+        response = self.client.get('/academics/classes/' + str(self.jss1.id) + '/students/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]['id'], self.student.id)
+
+        response = self.client.get('/academics/classes/' + str(self.jss2.id) + '/students/')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_admin_can_see_any_class_students(self):
+        admin = make_user('admin@example.com', 'admin')
+        self.client.force_authenticate(admin)
+        response = self.client.get('/academics/classes/' + str(self.jss2.id) + '/students/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
 
 class GradeTests(APITestCase):
     def test_grades(self):

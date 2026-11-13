@@ -134,8 +134,8 @@ class PasswordResetTests(APITestCase):
         self.assertEqual(len(mail.outbox), 1)
 
         email_body = mail.outbox[0].body
-        uid = re.search(r'uid: (\S+)', email_body).group(1)
-        token = re.search(r'token: (\S+)', email_body).group(1)
+        uid = re.search(r'uid=([^&\s]+)', email_body).group(1)
+        token = re.search(r'token=(\S+)', email_body).group(1)
 
         new_password = 'An0ther!Password'
         data = {'uid': uid, 'token': token, 'new_password': new_password, 'confirm_password': new_password}

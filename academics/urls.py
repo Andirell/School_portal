@@ -4,6 +4,8 @@ from academics import views
 
 urlpatterns = [
     path("classes/", views.list_classes, name="list_classes"),
+    path("my-classes/", views.my_classes, name="my_classes"),
+    path("classes/<int:class_id>/students/", views.class_students, name="class_students"),
     path("classes/<int:class_id>/results/", views.class_results, name="class_results"),
     path("subjects/", views.list_subjects, name="list_subjects"),
     path("results/", views.create_result, name="create_result"),
