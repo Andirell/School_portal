@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+/* School colours. Change these to rebrand the whole site. */
+@theme {
+  --color-brand: #1e3a5f;
+  --color-brand-dark: #142842;
+  --color-brand-light: #e8eef5;
+  --color-accent: #f2b632;
+}
+
+body {
+  @apply bg-slate-50 text-slate-800 antialiased;
+}
