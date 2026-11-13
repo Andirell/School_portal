@@ -1,8 +1,13 @@
 import { Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout'
 import ProtectedRoute from './components/ProtectedRoute'
+import AboutPage from './pages/AboutPage'
+import AcademicsPage from './pages/AcademicsPage'
 import AdminDashboard from './pages/AdminDashboard'
+import AdmissionsPage from './pages/AdmissionsPage'
+import ContactPage from './pages/ContactPage'
 import DashboardRedirect from './pages/DashboardRedirect'
+import FaqPage from './pages/FaqPage'
 import ForgotPasswordPage from './pages/ForgotPasswordPage'
 import HomePage from './pages/HomePage'
 import NewsDetailPage from './pages/NewsDetailPage'
@@ -14,6 +19,7 @@ import ResetPasswordPage from './pages/ResetPasswordPage'
 import SignInPage from './pages/SignInPage'
 import SignUpPage from './pages/SignUpPage'
 import StudentDashboard from './pages/StudentDashboard'
+import StudentLifePage from './pages/StudentLifePage'
 import TeacherDashboard from './pages/TeacherDashboard'
 
 export default function App() {
@@ -21,6 +27,12 @@ export default function App() {
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<HomePage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/academics" element={<AcademicsPage />} />
+        <Route path="/admissions" element={<AdmissionsPage />} />
+        <Route path="/student-life" element={<StudentLifePage />} />
+        <Route path="/faq" element={<FaqPage />} />
+        <Route path="/contact" element={<ContactPage />} />
         <Route path="/news" element={<NewsPage />} />
         <Route path="/news/:postId" element={<NewsDetailPage />} />
 

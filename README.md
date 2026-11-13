@@ -31,6 +31,7 @@ Then open http://localhost:5173.
 | Page            | Who      | What it does                                          |
 |-----------------|----------|-------------------------------------------------------|
 | `/`             | anyone   | Home page with latest news & events                   |
+| `/about`, `/academics`, `/admissions`, `/student-life`, `/faq`, `/contact` | anyone | School information pages |
 | `/news`         | anyone   | All news and events                                   |
 | `/signin`, `/signup`, `/forgot-password`, `/reset-password` | anyone | Accounts |
 | `/profile`      | logged in| View and edit your details, delete your account       |
@@ -38,6 +39,8 @@ Then open http://localhost:5173.
 | `/parent`       | parent   | Your children's results                               |
 | `/teacher`      | teacher  | Add and edit results for your class                   |
 | `/admin-panel`  | admin    | Manage news posts and view any class's results        |
+
+The school name, motto and contact details are all in `frontend/src/lib/config.ts`.
 
 Other frontend commands: `npm run build` (type check and build) and `npm run lint`.
 

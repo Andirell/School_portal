@@ -71,6 +71,23 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className="mx-auto max-w-6xl px-4 pb-16">
+        <div className="grid gap-5 sm:grid-cols-3">
+          <Link to="/about" className="rounded-lg bg-brand p-6 text-white hover:bg-brand-dark">
+            <h3 className="text-lg font-semibold">About us</h3>
+            <p className="mt-1 text-sm text-slate-200">Our story, vision and values.</p>
+          </Link>
+          <Link to="/academics" className="rounded-lg bg-brand p-6 text-white hover:bg-brand-dark">
+            <h3 className="text-lg font-semibold">Academics</h3>
+            <p className="mt-1 text-sm text-slate-200">Curriculum, subjects and grading.</p>
+          </Link>
+          <Link to="/admissions" className="rounded-lg bg-accent p-6 text-brand-dark hover:brightness-95">
+            <h3 className="text-lg font-semibold">Admissions</h3>
+            <p className="mt-1 text-sm">How to apply and what you'll need.</p>
+          </Link>
+        </div>
+      </section>
+
       <section className="bg-brand-light">
         <div className="mx-auto max-w-6xl px-4 py-16">
           <h2 className="text-3xl font-bold text-brand">School portal</h2>
